@@ -39,7 +39,7 @@
               <br><br>
             </div>
             <div>
-              <input class="form-control" type="text" name="kod_girilen" placeholder="Güvenlik Kodunu Giriniz.">
+              <input class="form-control" type="text" name="kod_girilen" autocomplete="off" placeholder="Güvenlik Kodunu Giriniz.">
             </div>
 
             <div>
