@@ -87,23 +87,11 @@ if ($sayac==0) {
                   </ul>
                 </li>
               </li>
-
-
-
-
-
               <li><a href="mesaj-islem.php"><i class="fa fa-question-circle"></i> Soru-Cevap İşlemleri </a></li>
-                <!--
-                  <li><a><i class="fa fa-cogs"></i> Ayarlar <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Genel Ayar</a></li>
-
-                    </ul>
-                  </li>
-                -->
+              <li><a href="admin-islem.php"><i class="fa fa-user"></i> Yeni Yönetici Ekle </a></li>
               </ul>
+               
             </div>
-
 
           </div>
           <!-- /sidebar menu -->
