@@ -7,102 +7,11 @@ include 'baglan.php';
 if (isset($_POST['kullanicikaydet'])) {
 
 
-	echo $kullanici_ad=htmlspecialchars($_POST['kullanici_ad']); echo "<br>";
-	echo $kullanici_soyad=htmlspecialchars($_POST['kullanici_soyad']); echo "<br>";
-
-	echo $kullanici_mail=htmlspecialchars($_POST['kullanici_mail']); echo "<br>";
-	echo $kullanici_gsm=htmlspecialchars($_POST['kullanici_gsm']); echo "<br>";
-	echo $kullanici_passwordone=trim($_POST['kullanici_passwordone']); echo "<br>";
-	echo $kullanici_passwordtwo=trim($_POST['kullanici_passwordtwo']); echo "<br>";
-
-	echo $kullanici_il=htmlspecialchars($_POST['kullanici_il']); echo "<br>";
-	echo $kullanici_ilce=htmlspecialchars($_POST['kullanici_ilce']); echo "<br>";
-
-	echo $kullanici_univ=htmlspecialchars($_POST['kullanici_univ']); echo "<br>";
-	echo $kullanici_bolum=htmlspecialchars($_POST['kullanici_bolum']); echo "<br>";
-	echo $kullanici_derece=htmlspecialchars($_POST['kullanici_derece']); echo "<br>";
-	echo $kullanici_durum=htmlspecialchars($_POST['kullanici_durum']); echo "<br>";
+	
 
 	if ($kullanici_passwordone==$kullanici_passwordtwo) {
-		echo "parola";
-		if (strlen($kullanici_passwordone)>=6) {
-			echo "6";
-
-
-			$kullanicisor=$db->prepare("select * from kullanici where kullanici_mail=:mail");
-			$kullanicisor->execute(array(
-				'mail' => $kullanici_mail
-			));
-
-			//dönen satır sayısını belirtir
-			$say=$kullanicisor->rowCount();
-
-
-
-			if ($say==0) {
-				echo "say";
-				//md5 fonksiyonu şifreyi md5 şifreli hale getirir.
-				$kullanici_password=md5($kullanici_passwordone);
-
-
-
-			//Kullanıcı kayıt işlemi yapılıyor...
-				$kullanicikaydet=$db->prepare("INSERT INTO kullanici SET
-					kullanici_ad=:kullanici_ad,
-					kullanici_soyad=:kullanici_soyad,
-					kullanici_mail=:kullanici_mail,
-					kullanici_gsm=:kullanici_gsm,
-					kullanici_password=:kullanici_password,
-					kullanici_il=:kullanici_il,
-					kullanici_ilce=:kullanici_ilce,
-					kullanici_univ=:kullanici_univ,
-					kullanici_bolum=:kullanici_bolum,
-					kullanici_derece=:kullanici_derece,
-					kullanici_durum=:kullanici_durum
-					");
-				$insert=$kullanicikaydet->execute(array(
-					'kullanici_ad' => $kullanici_ad,
-					'kullanici_soyad' => $kullanici_soyad,
-					'kullanici_mail' => $kullanici_mail,
-					'kullanici_gsm' => $kullanici_gsm,
-					'kullanici_password' => $kullanici_password,
-					'kullanici_il' => $kullanici_il,
-					'kullanici_ilce' => $kullanici_ilce,
-					'kullanici_univ' => $kullanici_univ,
-					'kullanici_bolum' => $kullanici_bolum,
-					'kullanici_derece' => $kullanici_derece,
-					'kullanici_durum' => $kullanici_durum
-
-				));
-
-				if ($insert) {
-					echo "başarılı";
-
-					header("Location:../../index.php?durum=loginbasarili");
-
-
-				//Header("Location:../production/genel-ayarlar.php?durum=ok");
-
-				} else {
-
-					echo "başarılı";
-					//header("Location:../../register.php?durum=basarisiz");
-				}
-
-			} else {
-
-				header("Location:../../register.php?durum=mukerrerkayit");
-
-
-
-			}
-
-
-
-
-
-
-		}
+		
+		
 	}
 }
 
