@@ -11,6 +11,7 @@ if (isset($_POST['kullanicikaydet'])) {
 
 	if ($kullanici_passwordone==$kullanici_passwordtwo) {
 		
+
 		
 	}
 }
