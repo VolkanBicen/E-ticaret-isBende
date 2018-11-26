@@ -172,6 +172,29 @@ if (isset($_POST['kategoriekle'])) {
 
 
 
+if (isset($_POST['kategoriduzenle'])) {
+
+		$kategori_id=$_POST['kategori_id'];
+
+
+		$ayarkaydet=$db->prepare("UPDATE kategori SET 
+
+			kategori_ad=:kategori_ad
+
+			WHERE kategori_id={$_POST['kategori_id']}");
+		$update=$ayarkaydet->execute(array(
+
+			'kategori_ad' => $_POST['kategori_ad'],
+
+		));
+
+		if($update){
+			Header("Location:../production/kategori-islem.php?kategori_id=$kategori_id&durum=ok");
+		}else{
+			Header("Location:../production/kategori-duzenle.php?kategori_id=$kategori_id&durum=no");
+		}	
+	}
+
 
 
 
