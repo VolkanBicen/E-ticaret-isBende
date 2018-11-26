@@ -195,6 +195,49 @@ if (isset($_POST['kategoriduzenle'])) {
 		}	
 	}
 
+if (isset($_POST['kategoriduzenle'])) {
+
+		$kategori_id=$_POST['kategori_id'];
+
+
+		$ayarkaydet=$db->prepare("UPDATE kategori SET 
+
+			kategori_ad=:kategori_ad
+
+			WHERE kategori_id={$_POST['kategori_id']}");
+		$update=$ayarkaydet->execute(array(
+
+			'kategori_ad' => $_POST['kategori_ad'],
+
+		));
+
+		if($update){
+			Header("Location:../production/kategori-islem.php?kategori_id=$kategori_id&durum=ok");
+		}else{
+			Header("Location:../production/kategori-duzenle.php?kategori_id=$kategori_id&durum=no");
+		}	
+	}
+
+
+	if ($_GET['kategorisil']=="ok") {
+
+		$sil=$db -> prepare("DELETE from kategori where kategori_id=:id");
+		$kategorisil=$sil -> execute(array('id' => $_GET['kategori_id'] 
+	));
+		if ($sil) {
+			header("location:../production/kategori-islem.php?sil=ok");
+
+		}	
+		else {
+			header("location:../production/kategori-islem.php?sil=no");
+		}
+
+
+	}
+	
+	
+}
+
 
 
 
