@@ -53,15 +53,16 @@ include 'nedmin/netting/baglan.php';
 											<div class="title-widget-bg">
 												<div class="title-widget">Giriş Yap</div>
 											</div>
-											<form role="form">
+											<form action="nedmin/netting/islem.php" method="POST" role="form">
 												<div class="form-group">
-													<input type="text" class="form-control" id="username" placeholder="Kullanıcı Adı">
+													<input type="text" class="form-control" name="kullanici_mail" id="username" placeholder="Kullanıcı Adınız(Mail Adresiniz)">
 												</div>
 												<div class="form-group">
-													<input type="password" class="form-control" id="password" placeholder="Şifre">
+													<input type="password" class="form-control" 
+													name="kullanici_password" id="password" placeholder="Şifreniz">
 												</div>
 												<div class="form-group">
-													<button class="btn btn-default btn-red btn-sm">Giriş</button>
+													<button type="submit" name="kullanicigiris" class="btn btn-default btn-red btn-sm">Giriş</button>
 												</div>
 											</form>
 										</div>
