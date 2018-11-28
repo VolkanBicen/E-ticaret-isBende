@@ -62,7 +62,8 @@ $gorevcek=$gorevsor -> fetch(PDO::FETCH_ASSOC);
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Görev Detay <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input maxlength="100" type="text" id="first-name" name="gorev_detay" value="<?php echo $gorevcek['gorev_detay'] ?>" required="required" class="form-control col-md-7 col-xs-12">
+                  <td> <textarea maxlength="299" style="resize:none" name="gorev_detay" class="form-control col-md-7 col-xs-12" rows="3" cols="30"><?php echo $gorevcek['gorev_detay']?></textarea> </td>
+
                 </div>
               </div>
 
@@ -107,7 +108,7 @@ $gorevcek=$gorevsor -> fetch(PDO::FETCH_ASSOC);
               </div>
 
               <div class="form-group ">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Görev yetenek <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Görev Yetenek <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <input maxlength="20" type="text" id="first-name" name="gorev_yetenek"  value="<?php echo $gorevcek['gorev_yetenek'] ?>" required="required" class="form-control col-md-7 col-xs-12">

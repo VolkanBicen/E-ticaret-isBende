@@ -318,7 +318,6 @@ if ($_GET['kategorisil']=="ok") {
 		header("location:../production/kategori-islem.php?sil=no");
 	}
 
-	
 }
 
 if (isset($_POST['kategoriekle'])) {
@@ -348,11 +347,7 @@ if (isset($_POST['kategoriekle'])) {
 
 	}
 	
-
-	
-	
 }
-
 
 if ($_GET['mesajsil']=="ok") {
 
@@ -366,7 +361,6 @@ if ($_GET['mesajsil']=="ok") {
 	else {
 		header("location:../production/mesaj-islem.php?sil=no");
 	}
-
 	
 }
 
