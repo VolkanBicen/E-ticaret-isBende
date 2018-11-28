@@ -25,9 +25,6 @@ if (isset($_POST['kullanicikaydet'])) {
 
 	if ($kullanici_passwordone==$kullanici_passwordtwo) {
 		
-		if (strlen($kullanici_passwordone)>=6) {
-			
-
 
 			$kullanicisor=$db->prepare("select * from kullanici where kullanici_mail=:mail");
 			$kullanicisor->execute(array(
@@ -43,7 +40,6 @@ if (isset($_POST['kullanicikaydet'])) {
 				
 				//md5 fonksiyonu şifreyi md5 şifreli hale getirir.
 				$kullanici_password=md5($kullanici_passwordone);
-
 
 
 			//Kullanıcı kayıt işlemi yapılıyor...
@@ -77,11 +73,7 @@ if (isset($_POST['kullanicikaydet'])) {
 
 				if ($insert) {
 					
-
 					header("Location:../../index.php?durum=loginbasarili");
-
-
-				//Header("Location:../production/genel-ayarlar.php?durum=ok");
 
 				} else {
 
@@ -93,16 +85,7 @@ if (isset($_POST['kullanicikaydet'])) {
 
 				header("Location:../../register.php?durum=mukerrerkayit");
 
-
-
 			}
-
-
-
-
-
-
-		}
 	}
 }
 
@@ -370,4 +353,4 @@ if ($_GET['mesajsil']=="ok") {
 	
 }
 
-?>
+?>  

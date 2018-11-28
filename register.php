@@ -76,15 +76,15 @@
 				
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control"  required="" name="kullanici_gsm" placeholder="Telefon Numarası Giriniz...">
+						<input type="text" pattern="\d{11}" class="form-control"  required="" name="kullanici_gsm" placeholder="Telefon Numarası Giriniz...">
 					</div>
 				</div>
 				<div class="form-group dob">
 					<div class="col-sm-6">
-						<input type="password" class="form-control" name="kullanici_passwordone"    placeholder="Şifrenizi Giriniz...">
+						<input type="password" minlength="6" ="" class="form-control" name="kullanici_passwordone"    placeholder="Şifrenizi Giriniz...">
 					</div>
 					<div class="col-sm-6">
-						<input type="password" class="form-control" name="kullanici_passwordtwo"   placeholder="Şifrenizi Tekrar Giriniz...">
+						<input type="password" minlength="6" class="form-control" name="kullanici_passwordtwo"   placeholder="Şifrenizi Tekrar Giriniz...">
 					</div>
 				</div>
 				<div class="form-group">
@@ -96,7 +96,11 @@
 
 				<button type="submit" name="kullanicikaydet" class="btn btn-default btn-red">Kayıt İşlemini Yap</button>
 			</div>
+			
 			<div class="col-md-6">
+				<div class="title-bg">
+					<div class="title"></div>
+				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
 						<input type="text" class="form-control"  required="" name="kullanici_ilce" placeholder="İlçe Giriniz...">
@@ -120,12 +124,12 @@
 
 			<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control"  required="" name="kullanici_derece" placeholder="Derece Giriniz...">
+						<input type="text"  pattern="[1-100]{1,3}" class="form-control"  required="" name="kullanici_derece" placeholder="Derece Giriniz...">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control"  required="" name="kullanici_durum" placeholder="Durum Giriniz...">
+						<input type="text"  class="form-control"  required="" name="kullanici_durum" placeholder="Durum Giriniz...">
 					</div>
 				</div>
 
