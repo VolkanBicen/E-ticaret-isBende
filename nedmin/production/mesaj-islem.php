@@ -86,7 +86,7 @@ $mesajsor->execute();
                     <td><?php echo $gonderenadcek['kullanici_ad'] ?></td>
                     <td><?php echo $aliciadcek['kullanici_ad'] ?></td>
 
-                   <td> <textarea maxlength="299" style="resize:none" name="gorev_detay" class="form-control col-md-7 col-xs-12" rows="3" cols="30"><?php echo $mesajcek['mesaj']?></textarea> </td>
+                   <td> <textarea maxlength="299" style="resize:none" name="mesaj" class="form-control col-md-7 col-xs-12" rows="3" cols="30"><?php echo $mesajcek['mesaj']?></textarea> </td>
 
                     
 

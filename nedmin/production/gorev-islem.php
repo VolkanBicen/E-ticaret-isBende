@@ -70,14 +70,14 @@ $gorevsor->execute();
                 while($gorevcek=$gorevsor->fetch(PDO::FETCH_ASSOC)) {?>
 
                   <tr>
-                    <td><?php echo $gorevcek['gorev_kategori'] ?></td>
-                    <td><?php echo $gorevcek['gorev_baslik'] ?></td>
-                    <td><?php echo $gorevcek['gorev_detay'] ?></td>
-                    <td><?php echo $gorevcek['gorev_ek'] ?></td>
-                    <td><?php echo $gorevcek['gorev_basTarih'] ?></td>
-                    <td><?php echo $gorevcek['gorev_bitTarih'] ?></td>
-                    <td><?php echo $gorevcek['gorev_butce']  ?> TL </td>
-                    <td><?php echo $gorevcek['gorev_yetenek'] ?></td>
+                  <td><?php echo substr($gorevcek['gorev_kategori'], 0, 10); ?>...</td>
+                   <td><?php echo substr($gorevcek['gorev_baslik'], 0, 10); ?>...</td>
+                   <td><?php echo substr($gorevcek['gorev_detay'], 0, 10); ?>...</td>
+                   <td><?php echo $gorevcek['gorev_ek'] ?></td>
+                   <td><?php echo $gorevcek['gorev_basTarih'] ?></td>
+                   <td><?php echo $gorevcek['gorev_bitTarih'] ?></td>
+                   <td><?php echo $gorevcek['gorev_butce']  ?> TL </td>
+                   <td><?php echo substr($gorevcek['gorev_yetenek'], 0, 10); ?>...</td>
 
                     <td><a href="gorev-duzenle.php?gorev_id=<?php echo $gorevcek['gorev_id'] ?>"><center><button class="btn btn-primary btn-xs">Düzenle</button></center></a></td>
 
