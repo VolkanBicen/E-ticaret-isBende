@@ -346,5 +346,47 @@ if ($_GET['mesajsil']=="ok") {
 	}
 	
 }
+if (isset($_POST['adminekle'])) {
+	$ad=$_POST['admin_kAdi'];
+	$adminpass=$_POST['Yadmin_password'];
+	$oturumpassword=$_POST['oturum_password'];
+
+	$kontrol=$db -> prepare("SELECT * from admin where admin_kAdi=:ad");
+	$sonuc=$kontrol -> execute(array('ad' => $ad
+));
+	$sayac=$kontrol -> rowCount();
+
+	
+
+	if ($sayac==0) {
+		if ($oturumpassword==$_SESSION['admin_password']) {
+
+			$ekle=$db -> prepare("INSERT INTO admin (admin_kAdi,admin_password) VALUES ('$ad','$adminpass')");
+			$adminekle=$ekle -> execute(array(
+			));
+
+			if ($adminekle) {
+				header("location:../production/admin-islem.php?ekle=ok");
+
+			}	
+			else {
+				header("location:../production/admin-islem.php?ekle=no");
+			}
+		}
+		else{
+			header("location:../production/admin-islem.php?ekle=eror");
+		}
+
+		
+	}
+	else{
+		header("location:../production/admin-islem.php?ekle=hata");
+	}
+}
+
+else{
+
+	header("location:../production/admin-islem.php?ekle=bhata");
+}
 
 ?>  
