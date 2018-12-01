@@ -26,72 +26,74 @@ if (isset($_POST['kullanicikaydet'])) {
 	if ($kullanici_passwordone==$kullanici_passwordtwo) {
 		
 
-			$kullanicisor=$db->prepare("select * from kullanici where kullanici_mail=:mail");
-			$kullanicisor->execute(array(
-				'mail' => $kullanici_mail
-			));
+		$kullanicisor=$db->prepare("select * from kullanici where kullanici_mail=:mail");
+		$kullanicisor->execute(array(
+			'mail' => $kullanici_mail
+		));
 
 			//dönen satır sayısını belirtir
-			$say=$kullanicisor->rowCount();
+		$say=$kullanicisor->rowCount();
 
 
 
-			if ($say==0) {
-				
+		if ($say==0) {
+
 				//md5 fonksiyonu şifreyi md5 şifreli hale getirir.
-				$kullanici_password=md5($kullanici_passwordone);
+			$kullanici_password=md5($kullanici_passwordone);
 
 
 			//Kullanıcı kayıt işlemi yapılıyor...
-				$kullanicikaydet=$db->prepare("INSERT INTO kullanici SET
-					kullanici_ad=:kullanici_ad,
-					kullanici_soyad=:kullanici_soyad,
-					kullanici_mail=:kullanici_mail,
-					kullanici_gsm=:kullanici_gsm,
-					kullanici_password=:kullanici_password,
-					kullanici_il=:kullanici_il,
-					kullanici_ilce=:kullanici_ilce,
-					kullanici_univ=:kullanici_univ,
-					kullanici_bolum=:kullanici_bolum,
-					kullanici_derece=:kullanici_derece,
-					kullanici_durum=:kullanici_durum
-					");
-				$insert=$kullanicikaydet->execute(array(
-					'kullanici_ad' => $kullanici_ad,
-					'kullanici_soyad' => $kullanici_soyad,
-					'kullanici_mail' => $kullanici_mail,
-					'kullanici_gsm' => $kullanici_gsm,
-					'kullanici_password' => $kullanici_password,
-					'kullanici_il' => $kullanici_il,
-					'kullanici_ilce' => $kullanici_ilce,
-					'kullanici_univ' => $kullanici_univ,
-					'kullanici_bolum' => $kullanici_bolum,
-					'kullanici_derece' => $kullanici_derece,
-					'kullanici_durum' => $kullanici_durum
+			$kullanicikaydet=$db->prepare("INSERT INTO kullanici SET
+				kullanici_ad=:kullanici_ad,
+				kullanici_soyad=:kullanici_soyad,
+				kullanici_mail=:kullanici_mail,
+				kullanici_gsm=:kullanici_gsm,
+				kullanici_password=:kullanici_password,
+				kullanici_il=:kullanici_il,
+				kullanici_ilce=:kullanici_ilce,
+				kullanici_univ=:kullanici_univ,
+				kullanici_bolum=:kullanici_bolum,
+				kullanici_derece=:kullanici_derece,
+				kullanici_durum=:kullanici_durum
+				");
+			$insert=$kullanicikaydet->execute(array(
+				'kullanici_ad' => $kullanici_ad,
+				'kullanici_soyad' => $kullanici_soyad,
+				'kullanici_mail' => $kullanici_mail,
+				'kullanici_gsm' => $kullanici_gsm,
+				'kullanici_password' => $kullanici_password,
+				'kullanici_il' => $kullanici_il,
+				'kullanici_ilce' => $kullanici_ilce,
+				'kullanici_univ' => $kullanici_univ,
+				'kullanici_bolum' => $kullanici_bolum,
+				'kullanici_derece' => $kullanici_derece,
+				'kullanici_durum' => $kullanici_durum
 
-				));
+			));
 
-				if ($insert) {
-					
-					header("Location:../../index.php?durum=loginbasarili");
+			if ($insert) {
 
-				} else {
-
-					
-					header("Location:../../register.php?durum=basarisiz");
-				}
+				header("Location:../../index.php?durum=loginbasarili");
 
 			} else {
 
-				header("Location:../../register.php?durum=mukerrerkayit");
 
+				header("Location:../../register.php?durum=basarisiz");
 			}
+
+		} else {
+
+			header("Location:../../register.php?durum=mukerrerkayit");
+
+		}
 	}
 }
 
 
 if (isset($_POST['admingiris'])) {
+
 	$admin_kAdi=$_POST['admin_kAdi'];
+
 	$admin_password=($_POST['admin_password']) ;
 
 	$admin=$db -> prepare("SELECT * FROM admin where 
@@ -107,7 +109,7 @@ if (isset($_POST['admingiris'])) {
 	echo $sayac=$admin -> rowCount();
 	if ($sayac==1 ) {
 		if (!empty($kod_girilen) && $kod_girilen==$_SESSION['kod']) {
-			$_SESSION['admin_kAdi']=$admin_kAdi;
+			$_SESSION['admin_kAdi']= $admin_kAdi;
 			header("Location:../production/index.php");
 		}
 		else{
@@ -189,6 +191,7 @@ if (isset($_POST['kullaniciduzenle'])) {
 		Header("Location:../production/kullanici-islem.php?kullanici_id=$kullanici_id&durum=ok");
 	}else{
 		Header("Location:../production/kullanici-duzenle.php?kullanici_id=$kullanici_id&durum=no");
+		exit();
 	}	
 }
 
@@ -222,6 +225,7 @@ if (isset($_POST['gorevduzenle'])) {
 		Header("Location:../production/gorev-islem.php?gorev_id=$gorev_id&durum=ok");
 	}else{
 		Header("Location:../production/gorev-duzenle.php?gorev_id=$gorev_id&durum=no");
+		exit();
 	}	
 }
 
@@ -246,6 +250,7 @@ if (isset($_POST['kategoriduzenle'])) {
 		Header("Location:../production/kategori-islem.php?kategori_id=$kategori_id&durum=ok");
 	}else{
 		Header("Location:../production/kategori-duzenle.php?kategori_id=$kategori_id&durum=no");
+		exit();
 	}	
 }
 
@@ -266,6 +271,7 @@ if ($_GET['kullanicisil']=="ok") {
 	}	
 	else {
 		header("location:../production/kullanici-islem.php?sil=no");
+		exit();
 	}
 
 	
@@ -282,6 +288,7 @@ if ($_GET['gorevsil']=="ok") {
 	}	
 	else {
 		header("location:../production/gorev-islem.php?sil=no");
+		exit();
 	}
 
 	
@@ -299,6 +306,7 @@ if ($_GET['kategorisil']=="ok") {
 	}	
 	else {
 		header("location:../production/kategori-islem.php?sil=no");
+		exit();
 	}
 
 }
@@ -314,6 +322,7 @@ if (isset($_POST['kategoriekle'])) {
 
 	if ($sayac==1) {
 		header("location:../production/kategori-ekle.php?ekle=eror");
+		exit();
 	}
 
 	else{
@@ -343,10 +352,13 @@ if ($_GET['mesajsil']=="ok") {
 	}	
 	else {
 		header("location:../production/mesaj-islem.php?sil=no");
+		exit();
 	}
 	
 }
+
 if (isset($_POST['adminekle'])) {
+
 	$ad=$_POST['admin_kAdi'];
 	$adminpass=$_POST['Yadmin_password'];
 	$oturumpassword=$_POST['oturum_password'];
@@ -371,22 +383,102 @@ if (isset($_POST['adminekle'])) {
 			}	
 			else {
 				header("location:../production/admin-islem.php?ekle=no");
+				exit();
 			}
 		}
 		else{
 			header("location:../production/admin-islem.php?ekle=eror");
+			exit();
 		}
 
 		
 	}
 	else{
 		header("location:../production/admin-islem.php?ekle=hata");
+		exit();
 	}
 }
 
-else{
+if (isset($_POST['genelayarkaydet'])) {
 
-	header("location:../production/admin-islem.php?ekle=bhata");
+	$ayarkaydet=$db->prepare("UPDATE ayar SET 
+
+		ayar_baslik=:ayar_baslik,
+		ayar_aciklama=:ayar_aciklama,
+		ayar_keywords=:ayar_keywords,
+		ayar_yazar=:ayar_yazar
+		
+		WHERE ayar_id=1");
+	$update=$ayarkaydet->execute(array(
+		
+		'ayar_baslik' => $_POST['ayar_baslik'],
+		'ayar_aciklama' => $_POST['ayar_aciklama'],
+		'ayar_keywords' => $_POST['ayar_keywords'],
+		'ayar_yazar' => $_POST['ayar_yazar'],
+		
+	));
+
+	if($update){
+		Header("Location:../production/genel-ayar.php?durum=ok");
+	}else{
+		Header("Location:../production/genel-ayar.php?durum=no");
+		exit();
+	}	
+}
+
+if (isset($_POST['sosyalmedyakaydet'])) {
+
+	$ayarkaydet=$db->prepare("UPDATE ayar SET 
+
+		ayar_facebook=:ayar_facebook,
+		ayar_twitter=:ayar_twitter,
+		ayar_youtube=:ayar_youtube
+		
+		
+		WHERE ayar_id=1");
+	$update=$ayarkaydet->execute(array(
+		
+		'ayar_facebook' => $_POST['ayar_facebook'],
+		'ayar_twitter' => $_POST['ayar_twitter'],
+		'ayar_youtube' => $_POST['ayar_youtube'],
+		
+		
+	));
+
+	if($update){
+		Header("Location:../production/sosyal-medya.php?durum=ok");
+	}else{
+		Header("Location:../production/sosyal-medya.php?durum=no");
+		exit();
+	}	
+}
+
+if (isset($_POST['hakkimizdakaydet'])) {
+
+	$ayarkaydet=$db->prepare("UPDATE hakkimizda SET 
+
+		hakkimizda_baslik=:hakkimizda_baslik,
+		hakkimizda_icerik=:hakkimizda_icerik,
+		hakkimizda_misyon=:hakkimizda_misyon,
+		hakkimizda_vizyon=:hakkimizda_vizyon
+
+		WHERE hakkimizda_id=0");
+	$update=$ayarkaydet->execute(array(
+		
+		'hakkimizda_baslik' => $_POST['hakkimizda_baslik'],
+		'hakkimizda_icerik' => $_POST['hakkimizda_icerik'],
+		'hakkimizda_misyon' => $_POST['hakkimizda_misyon'],
+		'hakkimizda_vizyon' => $_POST['hakkimizda_vizyon'],
+		
+		
+	));
+
+	if($update){
+		Header("Location:../production/hakkimizda.php?durum=ok");
+	}else{
+		Header("Location:../production/hakkimizda.php?durum=no");
+		exit();
+	}	
 }
 
 ?>  
