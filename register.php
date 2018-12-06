@@ -124,24 +124,10 @@
 
 			<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text"  pattern="[1-100]{1,3}" class="form-control"  required="" name="kullanici_derece" placeholder="Derece Giriniz...">
+						<input type="text"  class="form-control"  required="" name="kullanici_derece" placeholder="Derece Giriniz...">
 					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-sm-12">
-						<input type="text"  class="form-control"  required="" name="kullanici_durum" placeholder="Durum Giriniz...">
-					</div>
-				</div>
-
-
 				
-				<div class="title-bg">
-					<div class="title">Şifrenizi mi Unuttunuz?</div>
-				</div>
-
-
-
-				<center><img width="400" src="http://www.emrahyuksel.com.tr/dimg/sifremi-unuttum.jpg"></center>
 			</div>
 		</div>
 	</div>

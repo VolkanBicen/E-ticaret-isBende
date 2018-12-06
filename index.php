@@ -1,9 +1,6 @@
 ﻿	<?php  
 	include 'header.php'; 
-	
-	
 	?>
-	
 	<div class="container">
 		<div class="clearfix"></div>
 		<div class="lines"></div>
@@ -66,12 +63,9 @@
 				</div>
 			</div>
 
-
-
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12"><!--Main content-->
-
 						<div class="title-bg">
 							<div class="title">Görevler</div>
 						</div>
@@ -81,10 +75,6 @@
 								{?>
 									<div class="col-md-4">
 										<div class="productwrap">
-											<div class="pr-img">
-												<a href="product.htm"><img src="images\sample-2.jpg" alt="" class="img-responsive"></a>
-
-											</div>
 											<span 
 
 											;class="smalltitle2"><a href="product.htm"><?php echo  $gorevcek['gorev_baslik'] ?></a> </span>
@@ -95,7 +85,6 @@
 									<?php 
 								}
 								?>
-
 							</div><!--Products-->
 							<div class="spacer"></div>
 						</div><!--Main content-->

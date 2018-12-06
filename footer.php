@@ -3,15 +3,27 @@
 <div class="f-widget"><!--footer Widget-->
 		<div class="container">
 			<div class="row">
-				
+				<div class="col-md-4"><!--footer newsletter widget-->
+					<div class="title-widget-bg">
+						<div class="title-widget"><?php echo $hakkimizdacek['hakkimizda_baslik']; ?></div>
+					</div>
+					<div class="newsletter">
+						<p>
+							<?php echo $hakkimizdacek['hakkimizda_icerik']; ?>
 
-				
+						</p>
+						
+					</div>
+				</div>
+
+
 				<div class="col-md-4"><!--footer contact widget-->
 					<div class="title-widget-bg">
 						<div class="title-widget-cursive">İş Bende</div>
 					</div>
 					<ul class="contact-widget">
-						<li class="fphone"> <?php echo $ayarcek['ayar_tel'] ?></li>
+
+						<li class="fphone"> <?php echo  $ayarcek['ayar_tel'] ?></li>
 						<li class="fmobile"> <?php echo $ayarcek['ayar_gsm'] ?></li>
 						<li class="fmail lastone"> <?php echo $ayarcek['ayar_mail'] ?></li>
 					</ul>

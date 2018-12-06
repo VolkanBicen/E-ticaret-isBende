@@ -54,7 +54,7 @@ $ayarcek=$ayarsor->fetch(PDO::FETCH_ASSOC);
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-6 col-md-4 main-logo">
-						<a href="index.php"><img src="images\logo.png	" alt="logo" class="logo img-responsive"></a>
+						<a href="index.php"><img src="images\logo.png" alt="logo" class="logo img-responsive"></a>
 
 					</div>
 
@@ -99,8 +99,8 @@ $ayarcek=$ayarsor->fetch(PDO::FETCH_ASSOC);
 						<div class="col-sm-8 col-sm-pull-2">
 							<ul class="small-menu"><!--small-nav -->
 
+								<li><a href="" class="mychart">Görevler</a></li>
 								<li><a  href="hakkimizda.php"  class="mychart" >Hakkımızda</a></li>
-								<li><a href="" class="mychart">SSS</a></li>
 								<li><a href="iletisim.php" class="mychart">İletişim</a></li>
 
 							</ul><!--small-nav -->	
