@@ -1,3 +1,4 @@
+  
 <?php 
 ob_start();
 session_start();
@@ -6,22 +7,21 @@ include 'baglan.php';
 
 if (isset($_POST['kullanicikaydet'])) {
 
+	$kullanici_ad=htmlspecialchars($_POST['kullanici_ad']); echo "<br>";
+	$kullanici_soyad=htmlspecialchars($_POST['kullanici_soyad']); echo "<br>";
 
-	echo $kullanici_ad=htmlspecialchars($_POST['kullanici_ad']); echo "<br>";
-	echo $kullanici_soyad=htmlspecialchars($_POST['kullanici_soyad']); echo "<br>";
+	$kullanici_mail=htmlspecialchars($_POST['kullanici_mail']); echo "<br>";
+	$kullanici_gsm=htmlspecialchars($_POST['kullanici_gsm']); echo "<br>";
+	$kullanici_passwordone=trim($_POST['kullanici_passwordone']); echo "<br>";
+	$kullanici_passwordtwo=trim($_POST['kullanici_passwordtwo']); echo "<br>";
 
-	echo $kullanici_mail=htmlspecialchars($_POST['kullanici_mail']); echo "<br>";
-	echo $kullanici_gsm=htmlspecialchars($_POST['kullanici_gsm']); echo "<br>";
-	echo $kullanici_passwordone=trim($_POST['kullanici_passwordone']); echo "<br>";
-	echo $kullanici_passwordtwo=trim($_POST['kullanici_passwordtwo']); echo "<br>";
+	$kullanici_il=htmlspecialchars($_POST['kullanici_il']); echo "<br>";
+	$kullanici_ilce=htmlspecialchars($_POST['kullanici_ilce']); echo "<br>";
 
-	echo $kullanici_il=htmlspecialchars($_POST['kullanici_il']); echo "<br>";
-	echo $kullanici_ilce=htmlspecialchars($_POST['kullanici_ilce']); echo "<br>";
-
-	echo $kullanici_univ=htmlspecialchars($_POST['kullanici_univ']); echo "<br>";
-	echo $kullanici_bolum=htmlspecialchars($_POST['kullanici_bolum']); echo "<br>";
-	echo $kullanici_derece=htmlspecialchars($_POST['kullanici_derece']); echo "<br>";
-	echo $kullanici_durum=htmlspecialchars($_POST['kullanici_durum']); echo "<br>";
+	$kullanici_univ=htmlspecialchars($_POST['kullanici_univ']); echo "<br>";
+	$kullanici_bolum=htmlspecialchars($_POST['kullanici_bolum']); echo "<br>";
+	$kullanici_derece=htmlspecialchars($_POST['kullanici_derece']); echo "<br>";
+	
 
 	if ($kullanici_passwordone==$kullanici_passwordtwo) {
 		
@@ -53,8 +53,8 @@ if (isset($_POST['kullanicikaydet'])) {
 				kullanici_ilce=:kullanici_ilce,
 				kullanici_univ=:kullanici_univ,
 				kullanici_bolum=:kullanici_bolum,
-				kullanici_derece=:kullanici_derece,
-				kullanici_durum=:kullanici_durum
+				kullanici_derece=:kullanici_derece
+				
 				");
 			$insert=$kullanicikaydet->execute(array(
 				'kullanici_ad' => $kullanici_ad,
@@ -67,13 +67,13 @@ if (isset($_POST['kullanicikaydet'])) {
 				'kullanici_univ' => $kullanici_univ,
 				'kullanici_bolum' => $kullanici_bolum,
 				'kullanici_derece' => $kullanici_derece,
-				'kullanici_durum' => $kullanici_durum
+				
 
 			));
 
 			if ($insert) {
 
-				header("Location:../../index.php?durum=loginbasarili");
+				header("Location:../../index.php?durum=kayıtbasarili");
 
 			} else {
 
@@ -128,6 +128,9 @@ if (isset($_POST['admingiris'])) {
 if (isset($_POST['kullanicigiris'])) {
 
 
+	
+
+
 	echo $kullanici_mail=htmlspecialchars($_POST['kullanici_mail']);echo "<br>";
 	echo $kullanici_password=md5($_POST['kullanici_password']);echo "<br>";
 
@@ -137,25 +140,35 @@ if (isset($_POST['kullanicigiris'])) {
 		'password' => $kullanici_password
 		
 	));
+	$kod_girilen=$_POST['kod_girilen'];
 	
 	echo $say=$kullanicisor->rowCount();
 	
 
 	if($say==1){
+
+
+		if (!empty($kod_girilen) && $kod_girilen==$_SESSION['kod']) {
+			$_SESSION['kullanici_mail']=$kullanici_mail;
+
+			header("Location:../../?durum=basariligiris");
+			echo $_SESSION['userkullanici_mail']=$kullanici_mail;
+		}
+		else{
+			
+			header("Location:../../?durum=eror");
+			exit();
+		}
+	}
+
+	else{
 		
-
-		echo $_SESSION['userkullanici_mail']=$kullanici_mail;
-		header("Location:../../");
-
-		exit;	
-
-	}else{
-		
-		header("Location:../../?durum=basarisizgiris");
+		header("Location:../../?durum=no");
 	}
 
 
 }
+	
 
 
 
@@ -480,5 +493,131 @@ if (isset($_POST['hakkimizdakaydet'])) {
 		exit();
 	}	
 }
+if (isset($_FILES['dosya'])) {
 
-?>  
+
+	if (!empty($_FILES)) {
+		$hata = $_FILES['dosya']['error'];
+		if($hata != 0) {
+			echo 'Yüklenirken bir hata gerçekleşmiş.';
+		} else {
+			$name = $_FILES['dosya']["name"];
+			$benzersizsayi1=rand(20000,32000);
+			$benzersizsayi2=rand(20000,32000);
+			$benzersizad=$benzersizsayi1.$benzersizsayi2;
+
+			$dizin = '../../foto/';
+			$yuklenecek_dosya = $dizin .$benzersizad. basename($_FILES['dosya']['name']);
+
+			if (move_uploaded_file($_FILES['dosya']['tmp_name'], $yuklenecek_dosya))
+			{
+
+				$kullanici_fotoyol="/".$benzersizad.$name;
+				$fotokaydet=$db->prepare("UPDATE kullanici SET 
+
+					kullanici_foto=:kullanici_foto
+
+					WHERE kullanici_id=11");
+				$update=$fotokaydet->execute(array(
+
+					'kullanici_foto' => $kullanici_fotoyol,
+
+				));
+				if($update){
+					echo '(2)Dosyanız upload edildi!';
+				}else{
+					echo 'Dosyanız upload edilmedi!';
+					exit();
+				}
+
+			} else {
+				echo "Dosya yüklenemedi!\n";
+			}
+
+		}
+	}
+}
+
+switch ($_POST['profilgüncelle']) {
+
+	case 'bio':
+	$guncelle=$db->prepare("UPDATE kullanici SET 
+		kullanici_bio=:kullanici_bio
+		WHERE kullanici_id=11");
+	$update=$guncelle->execute(array(
+		'kullanici_bio' => $_POST['kullanici_bio'],
+	));
+	if($update){
+		Header("Location:../../profil.php");
+	}else{
+		Header("Location:../../profil.php");
+		exit();
+	}
+	break;
+
+case 'genel':
+
+	$guncelle=$db->prepare("UPDATE kullanici SET 
+		kullanici_ad=:kullanici_ad,
+		kullanici_soyad=:kullanici_soyad,
+		kullanici_mail=:kullanici_mail,
+		kullanici_gsm=:kullanici_gsm,
+		kullanici_il=:kullanici_il,
+		kullanici_ilce=:kullanici_ilce,
+		kullanici_adres=:kullanici_adres
+		WHERE kullanici_id=11");
+	$update=$guncelle->execute(array(
+		'kullanici_ad' => $_POST['kullanici_ad'],
+		'kullanici_soyad' => $_POST['kullanici_soyad'],
+		'kullanici_mail' => $_POST['kullanici_mail'],
+		'kullanici_gsm' => $_POST['kullanici_gsm'],
+		'kullanici_il' => $_POST['kullanici_il'],
+		'kullanici_ilce' => $_POST['kullanici_ilce'],
+		'kullanici_adres' => $_POST['kullanici_adres'],
+	));
+	if($update){
+		Header("Location:../../profil.php");
+	}else{
+		Header("Location:../../profil.php");
+		exit();
+	}
+	break;
+
+	case 'uptegitim':
+
+	$guncelle=$db->prepare("UPDATE kullanici SET 
+		kullanici_univ=:kullanici_univ,
+		kullanici_bolum=:kullanici_bolum,
+		kullanici_derece=:kullanici_derece
+	
+		WHERE kullanici_id=11");
+	$update=$guncelle->execute(array(
+		'kullanici_univ' => $_POST['kullanici_univ'],
+		'kullanici_bolum' => $_POST['kullanici_bolum'],
+		'kullanici_derece' => $_POST['kullanici_derece'],
+		
+	));
+	if($update){
+		Header("Location:../../profil.php");
+	}else{
+		Header("Location:../../.php");
+		exit();
+	}
+	break;
+
+	
+
+	
+	
+	default:
+	echo "as123d";
+	break;
+
+}
+
+
+
+
+
+?>
+
