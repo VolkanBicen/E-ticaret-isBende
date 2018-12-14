@@ -66,29 +66,29 @@ if (isset($_POST['kullanicikaydet'])) {
 				'kullanici_ilce' => $kullanici_ilce,
 				'kullanici_univ' => $kullanici_univ,
 				'kullanici_bolum' => $kullanici_bolum,
-				'kullanici_derece' => $kullanici_derece,
+				'kullanici_derece' => $kullanici_derece
 				
 
 			));
 
 			if ($insert) {
+				
 
-				header("Location:../../index.php?durum=kayıtbasarili");
-
-			} else {
-
-
-				header("Location:../../register.php?durum=basarisiz");
-			}
+			header("Location:../../mail_onay.php?m=$kullanici_mail");
 
 		} else {
 
-			header("Location:../../register.php?durum=mukerrerkayit");
 
+			header("Location:../../register.php?durum=basarisiz");
 		}
+
+	} else {
+
+		header("Location:../../register.php?durum=mukerrerkayit");
+
 	}
 }
-
+}
 
 if (isset($_POST['admingiris'])) {
 
