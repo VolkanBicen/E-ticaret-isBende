@@ -379,7 +379,7 @@ Color.prototype = {
 		return this.setChannel('cmyk', 2, val);
 	},
 	black: function (val) {
-		return this.setChannel('cmyk', 3, val);
+		return this.setChannel('cmyk', 3 val);
 	},
 
 	hexString: function () {

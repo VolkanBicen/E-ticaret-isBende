@@ -1,5 +1,6 @@
-<?php
 
+
+<?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -9,9 +10,9 @@ require 'PHPMailer/src/SMTP.php';
 
 $mail = new PHPMailer();
 
-$mail->isSMTP();
-$gonderenmail="vbicen2@gmail.com";
-$mail->CharSet="SET NAMES UTF8";  
+$mail->isSMTP(); 
+$gonderenmail=$_GET['m'];
+$mail->CharSet="SET NAMES UTF8";   
 $mail->SMTPKeepAlive = true;
 $mail->SMTPAuth = true;
 $mail->SMTPSecure = 'ssl'; //ssl
@@ -22,17 +23,18 @@ $mail->Password = "@@v0lkan-6606";
 $mail->setFrom("vbicen1@gmail.com");
 $mail->addAddress($gonderenmail);
 $mail->isHTML(true);
-$mail->Subject =  "From: ".$_POST["adsoyad"]."<".$_POST["email"].">\r\n";
-$mail->Body = "<h1>".$_POST["mesaj"]."</h1>";
+$mail->Subject = "is bende onay ";
+$mail->Body = "Lütfen Aşağıdaki linke tıklayrak mail onay gerçekleştiriniz\r\n http://localhost:8080/eticaret/onay.php?k=$gonderenmail";
 
-if ($mail->send())
-	header("Location:iletisim.php?durum=mailbasarili");
-exit();
-else
-	header("Location:iletisim.php?durum=mailbasarisiz");
-exit();
+if($mail->Send()){
 
+	header("Location:index.php?durum=bekleonay");
+
+}else {
+
+	header("Location:index.php?durum=basarisizonay");
+
+}
 
 ?>
-
 
