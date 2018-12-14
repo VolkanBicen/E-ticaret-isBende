@@ -68,15 +68,26 @@ $kullanicicek=$kullanicisor->fetch(PDO :: FETCH_ASSOC);
 						<div class="pushright">
 							<div class="top">
 
-								<?php if(!isset($_SESSION['kullanici_mail'])){?>
+							<?php if($_GET['mailonay']=="false" || $_GET['durum']=="bekleonay"){?>
+									<a  class="btn btn-default btn-dark">Mail Onay Bekleniyor<span></a>
+								<?php } 
+								elseif($_GET['mailonay']=="fault"){?>
+									<a href="#" id="reg" class="btn btn-default btn-dark">Böyle bir mail bulunamadı<span></a>
+								<?php } 
+
+								else {?>
+									
+
+								<?php if(!isset($_SESSION['kullanici_id'])){?>
 									<a href="#" id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
-								<?php } else {?>
-									<a href="#" class="btn btn-default btn-dark"><?php echo
-									$kullanicicek['kullanici_ad']?><span> </span><?php echo
-									$kullanicicek['kullanici_soyad'] ?></a>
+								<?php } 
+								else {?>
+									<a href="profil.php" class="btn btn-default btn-dark"><?php echo
+									$kullanicigiriscek['kullanici_ad']?><span> </span><?php echo
+									$kullanicigiriscek['kullanici_soyad'] ?></a>
 									<a href="logout.php" name="logout" title="Logout" class="btn btn-default btn-dark">Çıkış</a>
 									
-									
+								<?php } ?>
 								<?php } ?>
 								
 								<div class="regwrap">
