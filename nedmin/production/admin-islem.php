@@ -37,8 +37,11 @@ include 'header.php';
 
               <?php }
 
-             
+               if ($_GET['ekle']=="bhata") {?>
 
+                <b style="color:red;">bhata</b>
+
+              <?php }
 
               ?>
 

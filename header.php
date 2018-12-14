@@ -1,16 +1,13 @@
 <?php 
-include 'nedmin/netting/baglan.php';
 ob_start();
-session_start();
-$kullanicisor=$db-> prepare("SELECT * FROM kullanici order by kullanici_id asc limit 5");
-$kullanicisor -> execute(array(
-));
+session_start();	
+include 'nedmin/netting/baglan.php';
 
 $kategorisor=$db-> prepare("SELECT * FROM kategori ");
 $kategorisor -> execute(array(
 ));
 
-$gorevsor=$db-> prepare("SELECT * FROM gorev order by gorev_bitTarih asc limit 9");
+$gorevsor=$db-> prepare("SELECT * FROM gorev ");
 $gorevsor -> execute(array(
 ));
 
@@ -26,15 +23,14 @@ $ayarsor -> execute(array(
 ));
 $ayarcek=$ayarsor->fetch(PDO::FETCH_ASSOC);
 
-$kullanicigiris=$db-> prepare("SELECT * FROM kullanici where kullanici_id=:id");
-$kullanicigiris->execute(array(
-	'id'=> $_SESSION['kullanici_id']
+$kullanicisor=$db-> prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
+$kullanicisor->execute(array(
+	'mail'=> $_SESSION['kullanici_mail']
 ));
-$sayac=$kullanicigiris -> rowCount();
-$kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
+$sayac=$kullanicisor -> rowCount();
+$kullanicicek=$kullanicisor->fetch(PDO :: FETCH_ASSOC);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,29 +68,17 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 						<div class="pushright">
 							<div class="top">
 
-
-								<?php if($_GET['mailonay']=="false" || $_GET['durum']=="bekleonay"){?>
-									<a  class="btn btn-default btn-dark">Mail Onay Bekleniyor<span></a>
-								<?php } 
-								elseif($_GET['mailonay']=="fault"){?>
-									<a href="#" id="reg" class="btn btn-default btn-dark">Böyle bir mail bulunamadı<span></a>
-								<?php } 
-
-								else {?>
-									
-
-								<?php if(!isset($_SESSION['kullanici_id'])){?>
+								<?php if(!isset($_SESSION['kullanici_mail'])){?>
 									<a href="#" id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
-								<?php } 
-								else {?>
-									<a href="profil.php" class="btn btn-default btn-dark"><?php echo
-									$kullanicigiriscek['kullanici_ad']?><span> </span><?php echo
-									$kullanicigiriscek['kullanici_soyad'] ?></a>
+								<?php } else {?>
+									<a href="#" class="btn btn-default btn-dark"><?php echo
+									$kullanicicek['kullanici_ad']?><span> </span><?php echo
+									$kullanicicek['kullanici_soyad'] ?></a>
 									<a href="logout.php" name="logout" title="Logout" class="btn btn-default btn-dark">Çıkış</a>
 									
+									
 								<?php } ?>
-								<?php } ?>
-
+								
 								<div class="regwrap">
 									<div class="row">
 										<div class="col-md-6 regform">
@@ -114,12 +98,11 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 													<br><br>
 												</div>
 												<div>
-													<input class="form-control" type="text" name="guvenlik_kod" autocomplete="off" placeholder="Güvenlik Kodunu Giriniz.">
+													<input class="form-control" type="text" name="kod_girilen" autocomplete="off" placeholder="Güvenlik Kodunu Giriniz.">
 												</div><br>
 												<div class="form-group">
 													<button type="submit" name="kullanicigiris" class="btn btn-default btn-red btn-sm">Giriş</button>
 												</div>
-
 												<p class="change_link">
 													<?php 
 													if ($_GET['durum']=="no") {
@@ -151,7 +134,7 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 													?>
 
 												</p>
-												
+
 											</form>
 										</div>
 										<div class="col-md-6">
@@ -181,5 +164,6 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 				</div>
 			</div>
 			<div class="dashed"></div>
+
 		</div><!--Header -->
 		

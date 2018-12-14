@@ -93,8 +93,9 @@ if ($sayac==0) {
               <h3>Sİte Ayarları</h3>
               <br />
               <li><a href="genel-ayar.php"><i class="fa fa-user"></i> Site Genel Ayarları </a></li>
-              <li><a href="hakkimizda.php"><i class="fa fa-user"></i> Hakkımızda Ayarları </a></li>
+              <li><a href="hakkimizda.php"><i class="fa fa-user"></i> İletişim Bilgileri </a></li>
               <li><a href="sosyal-medya.php"><i class="fa fa-user"></i> Sosyal Medya Ayarları </a></li>
+              <li><a href="admin-islem.php"><i class="fa fa-user"></i> Api Ayarları </a></li>
 
             </ul>
 

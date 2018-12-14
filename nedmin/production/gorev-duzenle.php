@@ -1,4 +1,3 @@
-
 <?php 
 
 include 'header.php'; 
@@ -9,6 +8,7 @@ $gorevsor -> execute(array(
 ));
 
 $gorevcek=$gorevsor -> fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -45,7 +45,7 @@ $gorevcek=$gorevsor -> fetch(PDO::FETCH_ASSOC);
 
 
 
-            
+            <!-- / => en kök dizine çık ... ../ bir üst dizine çık -->
             <form action="../netting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
 
