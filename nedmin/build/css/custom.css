@@ -982,7 +982,9 @@ legend {
 
 .profile_details .profile_view .img-circle {
   border: 1px solid #E6E9ED;
-  padding: 2px; }
+  padding: 2px; 
+
+}
 
 .profile_details .profile_view h2 {
   margin: 5px 0; }

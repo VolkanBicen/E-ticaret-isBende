@@ -1,3 +1,5 @@
+
+
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -21,8 +23,8 @@ $mail->Password = "@@v0lkan-6606";
 $mail->setFrom("vbicen1@gmail.com");
 $mail->addAddress($gonderenmail);
 $mail->isHTML(true);
-$mail->Subject = "İs Bende Onay ";// Konu basligi
-$mail->Body = "Lütfen Aşağıdaki linke tıklayrak mail onay gerçekleştiriniz\r\n http://localhost/eticaret/onay.php?k=$gonderenmail";
+$mail->Subject = "is bende onay ";
+$mail->Body = "Lütfen Aşağıdaki linke tıklayrak mail onay gerçekleştiriniz\r\n http://localhost:8080/eticaret/onay.php?k=$gonderenmail";
 
 if($mail->Send()){
 
@@ -35,3 +37,4 @@ if($mail->Send()){
 }
 
 ?>
+
