@@ -30,7 +30,19 @@
     'id'=> $_SESSION['kullanici_id']
   ));
 
+  $kullaniciyeteneksor = $db->prepare("SELECT yetenekadi FROM yetenek inner join kullaniciyetenek on kullaniciyetenek.yetenekId = yetenek.yetenekId where kullaniciyetenek.kullaniciid =:id");
+  $kullaniciyeteneksor->execute(array(
+    'id'=> $_SESSION['kullanici_id']
+  ));
 
+  $kullaniciyetenekcek = $kullaniciyeteneksor->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+ $yetenekcek=$db-> prepare("SELECT * FROM yetenek");
+  $yetenekcek->execute();
+  $results = $yetenekcek->fetchAll(PDO::FETCH_ASSOC);
+  
   ?>
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -389,12 +401,37 @@
 
         <div class="tab-pane" id="yetenek">
           <hr>
-          <form class="form"  method="post" autocomplete="off" >
 
-           <div class="form-group">
-            <div class="col-xs-12">
-              <label><h4>Kategori</h4></label>
-              <input type="text" name="yetenek" class="form-control">
+          <form class="form" method="post" action="nedmin/netting/islem.php" autocomplete="off" >
+            <div class="form-group">
+              <div class="col-xs-12">
+                <label><h4>Yetenek</h4></label>
+                <br>
+                <div class="productwrapp">
+                  <p>
+                    <font face="Times New Roman" size="3" color="blue">
+
+                      <ul>
+
+                       <?php 
+                       echo "Daha Önce Kaydedişmiş Yetenekleriniz";
+                       foreach ($kullaniciyetenekcek as $bb) { 
+                        echo '<li>'.$bb['yetenekadi'].'</li>';
+                      }
+
+                      ?>
+                    </ul>
+                  </font>
+                </p>
+              </div>
+              <br>
+              <select name="yetenekId" style="width: 500px" >
+                <?php foreach ($results as $row) { ?>
+                  <option class="form-control" value="<?php echo $row['yetenekId']; ?>"><?php echo $row['yetenekadi']; ?></option>
+
+                <?php } ?>
+              </select>
+
               <h6><br>Yüklenen görevlerden yeteneklerinize göre haberdar olacaksınız.</h6>
             </div>
           </div>

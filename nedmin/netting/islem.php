@@ -765,6 +765,44 @@ switch ($_POST['profilgüncelle']) {
  }
  
  break;
+
+ case 'yetenek':
+
+$id=$_SESSION['kullanici_id'];
+$yetenek=$_POST['yetenekId'];
+
+ $kontrol=$db -> prepare("SELECT * from kullaniciyetenek where kullaniciid=:id and yetenekid=:yetenek ");
+ $kontrol -> execute(array(
+ 	'id' => $id,
+ 	'yetenek' => $yetenek
+
+));
+$say=$kontrol->rowCount();
+
+ if ( $say == 0) {
+
+$ekle=$db -> prepare("INSERT INTO kullaniciyetenek (yetenekId,kullaniciid) 
+
+	VALUES ( '$yetenek' ,'$id')");
+$yenetekekle=$ekle -> execute(array(
+));
+
+if ($yenetekekle) {
+	Header("Location:../../profil.php");
+	exit();
+
+}	
+else {
+	Header("Location:../../profil.php?durum=no");
+	exit();
+}
+
+}
+else{
+	Header("Location:../../profil.php");
+}
+break;
+
 }
 
 ?>
