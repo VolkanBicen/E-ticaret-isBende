@@ -47,7 +47,7 @@ if (isset($_GET['sef'])) {
 									<?php 
 									while($kategoricek=$kategorisor->fetch(PDO::FETCH_ASSOC)) 
 										{?>
-											<li class="lastone"><a href="category.htm"><b><?php echo  $kategoricek['kategori_ad'] ?></b> </a></li>
+											<li class="lastone"><a href="gorevler-<?=($kategoricek["kategori_ad"])?>"><?php echo  $kategoricek['kategori_ad'] ?></a></li>
 											<?php 
 										}
 										?>
