@@ -16,6 +16,7 @@ RewriteRule ^(.*)$ $1.php
 #ErrorDocument 404 http://www.joyakademi.com
 
 RewriteRule ^sayfa-([0-9a-zA-Z-_]+) menu-detay.php?sef=?1 [L,QSA]
+RewriteRule ^gorevler-([0-9a-zA-Z-_]+) gorevler.php?sef=$1 [L,QSA]
 
 
 

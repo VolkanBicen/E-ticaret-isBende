@@ -11,6 +11,23 @@
 	$gorevtarihbitsor->execute(array(
 		'tarih'=> $tarih
 	));
+if (isset($_GET['sef'])) {
+		date_default_timezone_set('Europe/Istanbul');
+		$tarih1= date('Y-m-d');
+		$kategorigorevsor=$db->prepare("SELECT * FROM kategori where kategori_ad=:ad");
+		$kategorigorevsor->execute(array(
+			'ad' => $_GET['sef']
+		));
+		$kategorgorevicek=$kategorigorevsor->fetch(PDO::FETCH_ASSOC);
+		$kategori_ad=$kategorgorevicek['kategori_id'];
+
+		
+		
+
+	}else{
+		
+	}
+
 	
 	?>
 
