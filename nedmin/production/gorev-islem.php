@@ -70,7 +70,7 @@ $gorevsor->execute();
                 while($gorevcek=$gorevsor->fetch(PDO::FETCH_ASSOC)) {?>
 
                   <tr>
-                  <td><?php echo substr($gorevcek['gorev_kategori'], 0, 10); ?>...</td>
+                 
                    <td><?php echo substr($gorevcek['gorev_baslik'], 0, 10); ?>...</td>
                    <td><?php echo substr($gorevcek['gorev_detay'], 0, 10); ?>...</td>
                    <td><?php echo $gorevcek['gorev_ek'] ?></td>

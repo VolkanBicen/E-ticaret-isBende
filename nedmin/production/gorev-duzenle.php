@@ -67,13 +67,7 @@ $gorevcek=$gorevsor -> fetch(PDO::FETCH_ASSOC);
                 </div>
               </div>
 
-              <div class="form-group ">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"> Görev Kategori <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input maxlength="20" type="text" id="first-name" name="gorev_kategori" value="<?php echo $gorevcek['gorev_kategori'] ?>" required="required" class="form-control col-md-7 col-xs-12">
-                </div>
-              </div>
+           
 
               <?php
               $zaman=explode(" ",$gorevcek['gorev_basTarih']);

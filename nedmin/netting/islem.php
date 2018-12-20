@@ -93,6 +93,8 @@ if (isset($_POST['kullanicikaydet'])) {
 		}
 	}
 }
+
+
 if (isset($_POST['kullanicigiris'])) {
 
 	$kullanici_mail=htmlspecialchars($_POST['kullanici_mail']);
@@ -133,6 +135,7 @@ if (isset($_POST['kullanicigiris'])) {
 	}
 
 }
+
 
 if (isset($_POST['admingiris'])) {
 
@@ -218,7 +221,6 @@ if (isset($_POST['gorevduzenle'])) {
 
 		gorev_baslik=:gorev_baslik,
 		gorev_detay=:gorev_detay,
-		gorev_kategori=:gorev_kategori,
 		gorev_butce=:gorev_butce,
 		gorev_yetenek=:gorev_yetenek
 
@@ -228,7 +230,6 @@ if (isset($_POST['gorevduzenle'])) {
 		
 		'gorev_baslik' => $_POST['gorev_baslik'],
 		'gorev_detay' => $_POST['gorev_detay'],
-		'gorev_kategori' => $_POST['gorev_kategori'],
 		'gorev_butce' => $_POST['gorev_butce'],
 		'gorev_yetenek' => $_POST['gorev_yetenek'],
 		
@@ -555,6 +556,63 @@ if (isset($_FILES['dosya'])) {
 	}
 }
 
+if (isset($_POST['download'])) {
+
+	$file=$_POST['gorev_ek'];
+	$ad=$_POST['gorev_baslik'];
+
+	header("Content-length: ".filesize("../../foto".$file));  
+	header('Content-Type: application/octet-stream');  
+	header('Content-Disposition: attachment; filename="' ."İş Bende ". $file . '"');  
+	readfile("../../foto".$file); 
+}
+
+if (isset($_POST['sorucevap'])) {
+	$soru=$_POST['soru'];
+	$gonderenId=$_POST['gonderenId'];
+	$cevaplayanId=$_POST['cevaplayanId'];
+	$gorev_id=$_POST['gorev_id'];
+
+	$sayackelime=0;
+	$i=0;
+	
+	$dizi=explode(" ",$soru);
+	$uzunluk=strlen($soru);
+ $fh = fopen("yasakkelimeler.txt","r"); //aciyoruz ve okuma yaptırıyoruz 
+
+ while($ddd = fgets($fh,900)) { 
+ 	for ($j=0; $j < $uzunluk ; $j++) { 
+
+ 		if (trim($ddd)==trim($dizi[$j])) {
+ 			$sayackelime=$sayackelime+1;
+
+ 		}
+ 	}
+ }
+
+ if ($sayackelime==0) {
+
+ 	$ekle=$db -> prepare("INSERT INTO mesaj (gonderenId,cevaplayanId,gorev_id,mesaj) 
+ 		VALUES ( '$gonderenId' ,'$cevaplayanId','$gorev_id','$soru')");
+ 	$mesajekle=$ekle -> execute(array(
+ 	));
+ 	if($mesajekle){
+ 		Header("Location:../../teklif.php?id=$gorev_id");
+ 		
+ 		exit();
+ 	}else{
+ 		Header("Location:../../gorevler.php");
+ 		exit();
+ 	}
+ }
+ else{
+ 	Header("Location:../../gorevler.php?durum=no");
+ 	exit();
+ 	break;
+ }
+
+}
+
 switch ($_POST['profilgüncelle']) {
 
 	case 'bio':
@@ -565,6 +623,7 @@ switch ($_POST['profilgüncelle']) {
 	$dizi=explode(" ",$metin);
 	$uzunluk=strlen($metin);
  $fh = fopen("yasakkelimeler.txt","r"); //aciyoruz ve okuma yaptırıyoruz 
+
  while($ddd = fgets($fh,900)) { 
  	for ($j=0; $j < $uzunluk ; $j++) { 
 
@@ -659,7 +718,8 @@ switch ($_POST['profilgüncelle']) {
  case 'gorev':
 
  $id=$_SESSION['kullanici_id'];
- $gorev_kategori=$_POST['gorev_kategori'];
+ $gorev_kategori=$_POST['gorevkategoriID'];
+ $gorev_yetenek_id=$_POST['gorevyetenekID'];
  $gorev_baslik=$_POST['gorev_baslik'];
  $gorev_detay=$_POST['gorev_detay'];
  $gorev_bitTarih=$_POST['gorev_bitTarih']; 
@@ -681,7 +741,7 @@ switch ($_POST['profilgüncelle']) {
  		));
 
  		if ($gorevekle) {
- 			Header("Location:../../profil.php");
+ 			header("Location:../../coklumail.php?id=$gorev_yetenek_id");
  			exit();
 
  		}	
@@ -768,42 +828,44 @@ switch ($_POST['profilgüncelle']) {
 
  case 'yetenek':
 
-$id=$_SESSION['kullanici_id'];
-$yetenek=$_POST['yetenekId'];
+ $id=$_SESSION['kullanici_id'];
+ $yetenek=$_POST['yetenekId'];
 
  $kontrol=$db -> prepare("SELECT * from kullaniciyetenek where kullaniciid=:id and yetenekid=:yetenek ");
  $kontrol -> execute(array(
  	'id' => $id,
  	'yetenek' => $yetenek
 
-));
-$say=$kontrol->rowCount();
+ ));
+ $say=$kontrol->rowCount();
 
  if ( $say == 0) {
 
-$ekle=$db -> prepare("INSERT INTO kullaniciyetenek (yetenekId,kullaniciid) 
+ 	$ekle=$db -> prepare("INSERT INTO kullaniciyetenek (yetenekId,kullaniciid) 
 
-	VALUES ( '$yetenek' ,'$id')");
-$yenetekekle=$ekle -> execute(array(
-));
+ 		VALUES ( '$yetenek' ,'$id')");
+ 	$yenetekekle=$ekle -> execute(array(
+ 	));
 
-if ($yenetekekle) {
-	Header("Location:../../profil.php");
-	exit();
+ 	if ($yenetekekle) {
+ 		Header("Location:../../profil.php");
+ 		exit();
 
-}	
-else {
-	Header("Location:../../profil.php?durum=no");
-	exit();
+ 	}	
+ 	else {
+ 		Header("Location:../../profil.php?durum=no");
+ 		exit();
+ 	}
+
+ }
+ else{
+ 	Header("Location:../../profil.php");
+ }
+ break;
+
 }
 
-}
-else{
-	Header("Location:../../profil.php");
-}
-break;
 
-}
 
 ?>
 

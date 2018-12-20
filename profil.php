@@ -2,6 +2,7 @@
   include 'header.php'; 
   ob_start();
   session_start();
+
   $kullanicisor=$db-> prepare("SELECT * FROM kullanici where kullanici_id=:id");
   $kullanicisor -> execute(array(
     'id'=> $_SESSION['kullanici_id']
@@ -30,6 +31,20 @@
     'id'=> $_SESSION['kullanici_id']
   ));
 
+
+  $kategoricek=$db-> prepare("SELECT * FROM kategori");
+  $kategoricek->execute();
+  $kategorisor = $kategoricek->fetchAll(PDO::FETCH_ASSOC);
+
+  $yetenekcek=$db-> prepare("SELECT * FROM yetenek");
+  $yetenekcek->execute();
+  $yeteneksor = $yetenekcek->fetchAll(PDO::FETCH_ASSOC);
+
+
+  $yetenekcek=$db-> prepare("SELECT * FROM yetenek");
+  $yetenekcek->execute();
+  $results = $yetenekcek->fetchAll(PDO::FETCH_ASSOC);
+
   $kullaniciyeteneksor = $db->prepare("SELECT yetenekadi FROM yetenek inner join kullaniciyetenek on kullaniciyetenek.yetenekId = yetenek.yetenekId where kullaniciyetenek.kullaniciid =:id");
   $kullaniciyeteneksor->execute(array(
     'id'=> $_SESSION['kullanici_id']
@@ -37,12 +52,6 @@
 
   $kullaniciyetenekcek = $kullaniciyeteneksor->fetchAll(PDO::FETCH_ASSOC);
 
-
-
- $yetenekcek=$db-> prepare("SELECT * FROM yetenek");
-  $yetenekcek->execute();
-  $results = $yetenekcek->fetchAll(PDO::FETCH_ASSOC);
-  
   ?>
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -311,7 +320,27 @@
                <div class="form-group">
                 <div class="col-xs-12">
                   <label><h4>Kategori </h4></label>
-                  <input type="text" class="form-control" name="gorev_kategori" value="" required >
+                  <br>
+                  <select name="gorevkategoriID" style="width: 500px" >
+                    <?php foreach ($kategorisor as $satir) { ?>
+                      <option class="form-control" value="<?php echo $satir['kategori_id']; ?>"><?php echo $satir['kategori_ad']; ?></option>
+
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <label><h4> Görev Yetenek </h4></label>
+                  <br>
+                  <select name="gorevyetenekID" style="width: 500px" >
+                    <?php foreach ($yeteneksor as $satir) { ?>
+                      <option class="form-control" value="<?php echo $satir['yetenekId']; ?>"><?php echo $satir['yetenekadi']; ?></option>
+
+                    <?php } ?>
+                  </select>
                 </div>
               </div>
 

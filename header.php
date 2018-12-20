@@ -74,14 +74,14 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 									<a  class="btn btn-default btn-dark">Mail Onay Bekleniyor<span></a>
 									<?php } 
 									elseif($_GET['mailonay']=="fault"){?>
-										<a href="#" id="reg" class="btn btn-default btn-dark">Böyle bir mail bulunamadı<span></a>
+										<a  id="reg" class="btn btn-default btn-dark">Böyle bir mail bulunamadı<span></a>
 										<?php } 
 
 										else {?>
 
 
 											<?php if(!isset($_SESSION['kullanici_id'])){?>
-												<a href="#" id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
+												<a  id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
 											<?php } 
 											else {?>
 												<a href="profil.php" class="btn btn-default btn-dark"><?php echo
@@ -170,7 +170,10 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 								<div class="col-sm-8 col-sm-pull-2">
 									<ul class="small-menu"><!--small-nav -->
 
-										<li><a href="gorevler.php" class="mychart">Görevler</a></li>
+										<li><a<?php 
+										if (isset($_SESSION['kullanici_id'])) {?>
+										 	 href="gorevler.php"
+										<?php } ?> class="mychart">Görevler</a></li>
 										<li><a  href="hakkimizda.php"  class="mychart" >Hakkımızda</a></li>
 										<li><a href="iletisim.php" class="mychart">İletişim</a></li>
 

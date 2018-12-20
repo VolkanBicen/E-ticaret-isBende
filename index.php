@@ -67,10 +67,10 @@
 									<div class="productwrap">
 										<div class="pr-img">
 
-											<a href="product.htm"><img src="images\sample-1.jpg" alt="" class="img-responsive"></a>
+											<a><img src="images\sample-1.jpg" alt="" class="img-responsive"></a>
 
 										</div>
-										<span class="smalltitle"><a href="product.htm"><?php echo  $kategoricek['kategori_ad'] ?></a> </span>
+										<span class="smalltitle"><a ><?php echo  $kategoricek['kategori_ad'] ?></a> </span>
 
 									</div>
 								</div>
@@ -95,9 +95,9 @@
 											<div class="productwrap">
 												<span 
 
-												;class="smalltitle2"><a href="product.htm"><?php echo  $gorevcek['gorev_baslik'] ?></a> </span>
+												;class="smalltitle2"><a ><?php echo  $gorevcek['gorev_baslik'] ?></a> </span>
 												<br>
-												<span class="smalltitle2"><a href="product.htm"><?php echo  $gorevcek['gorev_detay'] ?></a> </span>
+												<span class="smalltitle2"><a><?php echo  $gorevcek['gorev_detay'] ?></a> </span>
 											</div>
 										</div>
 										<?php 
