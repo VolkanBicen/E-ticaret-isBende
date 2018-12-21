@@ -33,6 +33,43 @@ $kullanicigiris->execute(array(
 $sayac=$kullanicigiris -> rowCount();
 $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 
+if (isset($_GET['sef'])) {
+		date_default_timezone_set('Europe/Istanbul');
+		$tarih1= date('Y-m-d');
+		$kategorigorevsor=$db->prepare("SELECT * FROM kategori where kategori_id=:id");
+		$kategorigorevsor->execute(array(
+			'id' => $_GET['sef']
+		));
+		$kategorgorevicek=$kategorigorevsor->fetch(PDO::FETCH_ASSOC);
+		$kategori_ad=$kategorgorevicek['kategori_id'];
+
+		$gorevkategorisorbastar=$db->prepare("SELECT * FROM gorev where kategori_id=:kategori_id and gorev_bitTarih >=:tarih ");
+		$gorevkategorisorbastar->execute(array(
+			'kategori_id' => $kategori_id,
+			'tarih'=> $tarih1
+		));
+		$gorevkategorisorbittar=$db->prepare("SELECT * FROM gorev where kategori_id=:kategori_id and gorev_bitTarih <:tarih ");
+		$gorevkategorisorbittar->execute(array(
+			'kategori_id' => $kategori_id,
+			'tarih'=> $tarih1
+		));
+		
+		
+
+	}else{
+		date_default_timezone_set('Europe/Istanbul');
+		$tarih= date('Y-m-d');
+		$gorevkategorisorbastar=$db->prepare("SELECT * FROM gorev where gorev_bitTarih >=:tarih ");
+		$gorevkategorisorbastar->execute(array(
+			'tarih'=> $tarih
+		));
+
+		$gorevkategorisorbittar=$db->prepare("SELECT * FROM gorev where gorev_bitTarih <:tarih ");
+		$gorevkategorisorbittar->execute(array(
+			'tarih'=> $tarih
+		));
+	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +91,8 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 	<!-- owl Style -->
 	<link rel="stylesheet" href="css\owl.carousel.css">
 	<link rel="stylesheet" href="css\owl.transitions.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	
 </head>
 <body>
@@ -74,14 +113,14 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 									<a  class="btn btn-default btn-dark">Mail Onay Bekleniyor<span></a>
 									<?php } 
 									elseif($_GET['mailonay']=="fault"){?>
-										<a  id="reg" class="btn btn-default btn-dark">Böyle bir mail bulunamadı<span></a>
+										<a href="#" id="reg" class="btn btn-default btn-dark">Böyle bir mail bulunamadı<span></a>
 										<?php } 
 
 										else {?>
 
 
 											<?php if(!isset($_SESSION['kullanici_id'])){?>
-												<a  id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
+												<a href="#" id="reg" class="btn btn-default btn-dark">Giriş Yap<span>-- yada --</span>Kayıt Ol</a>
 											<?php } 
 											else {?>
 												<a href="profil.php" class="btn btn-default btn-dark"><?php echo
@@ -170,10 +209,7 @@ $kullanicigiriscek=$kullanicigiris->fetch(PDO :: FETCH_ASSOC);
 								<div class="col-sm-8 col-sm-pull-2">
 									<ul class="small-menu"><!--small-nav -->
 
-										<li><a<?php 
-										if (isset($_SESSION['kullanici_id'])) {?>
-										 	 href="gorevler.php"
-										<?php } ?> class="mychart">Görevler</a></li>
+										<li><a href="gorevler.php" class="mychart">Görevler</a></li>
 										<li><a  href="hakkimizda.php"  class="mychart" >Hakkımızda</a></li>
 										<li><a href="iletisim.php" class="mychart">İletişim</a></li>
 

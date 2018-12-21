@@ -1,5 +1,36 @@
-﻿	<?php  
-	include 'header.php'; ?>
+	<?php  
+	include 'header.php'; 
+	include 'nedmin/netting/baglan.php';
+	
+
+	if (isset($_POST['arama'])) {
+		date_default_timezone_set('Europe/Istanbul');
+		$tarih2= date('Y-m-d');
+
+		$aranan=trim($_POST['aranan']);
+
+
+		
+
+		$gorevaramabastar=$db->prepare("SELECT * FROM gorev where  gorev_baslik like '%$aranan%' and gorev_bitTarih >=:tarih ");
+		$gorevaramabastar->execute(array(
+			
+			'tarih'=> $tarih2
+
+		));
+
+		$gorevaramabittar=$db->prepare("SELECT * FROM gorev where gorev_baslik  like '%$aranan%' and gorev_bitTarih <=:tarih ");
+		$gorevaramabittar->execute(array(
+
+			'tarih'=> $tarih2
+
+		));
+
+	}
+
+
+	?>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12"><!--Main content-->
@@ -47,7 +78,7 @@
 											<div class="row prdct"><!--Products-->
 												<?php 
 
-												 $sayfada = 3; // sayfada gösterilecek içerik miktarını belirtiyoruz.
+												 $sayfada = 6; // sayfada gösterilecek içerik miktarını belirtiyoruz.
 												 $sorgu=$db->prepare("SELECT * FROM gorev");
 												 $sorgu->execute();
 												 $toplam_icerik=$sorgu->rowCount();
@@ -57,37 +88,11 @@
 												 if($sayfa > $toplam_sayfa) $sayfa = $toplam_sayfa; 
 												 $limit = ($sayfa - 1) * $sayfada;
 
-												 if (isset($_GET['sef'])) {
-												 	date_default_timezone_set('Europe/Istanbul');
-												 	$tarih1= date('Y-m-d');
-												 	$kategorigorevsor=$db->prepare("SELECT * FROM kategori where kategori_id=:id");
-												 	$kategorigorevsor->execute(array(
-												 		'id' => $_GET['sef']
-												 	));
-												 	$kategorgorevicek=$kategorigorevsor->fetch(PDO::FETCH_ASSOC);
-												 	$kategori_ad=$kategorgorevicek['kategori_id'];
+												 
 
-												 	$gorevkategorisorbastar=$db->prepare("SELECT * FROM gorev where gorev_kategori=:gorev_kategori and gorev_bitTarih >=:tarih order by gorev_id desc limit $limit,$sayfada");
-												 	$gorevkategorisorbastar->execute(array(
-												 		'gorev_kategori' => $kategori_ad,
-												 		'tarih'=> $tarih1
-												 	));
+												 
 
-
-
-
-												 }else{
-												 	date_default_timezone_set('Europe/Istanbul');
-												 	$tarih= date('Y-m-d');
-												 	$gorevkategorisorbastar=$db->prepare("SELECT * FROM gorev where gorev_bitTarih >=:tarih order by gorev_id desc limit $limit,$sayfada");
-												 	$gorevkategorisorbastar->execute(array(
-												 		'tarih'=> $tarih
-												 	));
-
-
-												 }
-
-												 while($gorevkategoricekbastar=$gorevkategorisorbastar->fetch(PDO::FETCH_ASSOC)) 
+												 while($gorevkategoricekbastar=$gorevaramabastar->fetch(PDO::FETCH_ASSOC)) 
 												 	{?>
 												 		<div class="col-md-4">
 												 			<div class="productwrapg">
@@ -163,7 +168,7 @@
 												 						<div class="row prdct"><!--Products-->
 												 							<?php 
 
-												 $sayfada = 3; // sayfada gösterilecek içerik miktarını belirtiyoruz.
+												 $sayfada = 6; // sayfada gösterilecek içerik miktarını belirtiyoruz.
 												 $sorgu=$db->prepare("SELECT * FROM gorev");
 												 $sorgu->execute();
 												 $toplam_icerik=$sorgu->rowCount();
@@ -173,36 +178,8 @@
 												 if($sayfa > $toplam_sayfa) $sayfa = $toplam_sayfa; 
 												 $limit = ($sayfa - 1) * $sayfada;
 
-												 if (isset($_GET['sef'])) {
-												 	date_default_timezone_set('Europe/Istanbul');
-												 	$tarih1= date('Y-m-d');
-												 	$kategorigorevsor=$db->prepare("SELECT * FROM kategori where kategori_id=:id");
-												 	$kategorigorevsor->execute(array(
-												 		'id' => $_GET['sef']
-												 	));
-												 	$kategorgorevicek=$kategorigorevsor->fetch(PDO::FETCH_ASSOC);
-												 	$kategori_ad=$kategorgorevicek['kategori_id'];
-
-												 	$gorevkategorisorbittar=$db->prepare("SELECT * FROM gorev where gorev_kategori=:gorev_kategori and gorev_bitTarih <=:tarih order by gorev_id desc limit $limit,$sayfada");
-												 	$gorevkategorisorbittar->execute(array(
-												 		'gorev_kategori' => $kategori_ad,
-												 		'tarih'=> $tarih1
-												 	));
-
-
-
-
-												 }else{
-												 	date_default_timezone_set('Europe/Istanbul');
-												 	$tarih= date('Y-m-d');
-												 	$gorevkategorisorbittar=$db->prepare("SELECT * FROM gorev where gorev_bitTarih <=:tarih order by gorev_id desc limit $limit,$sayfada");
-												 	$gorevkategorisorbittar->execute(array(
-												 		'tarih'=> $tarih
-												 	));
-
-
-												 }
-												 while($gorevkategoricekbittar=$gorevkategorisorbittar->fetch(PDO::FETCH_ASSOC)) 
+												 
+												 while($gorevkategoricekbittar=$gorevaramabittar->fetch(PDO::FETCH_ASSOC)) 
 												 	{?>
 												 		<div class="col-md-4">
 												 			<div class="productwrapg">
