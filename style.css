@@ -551,7 +551,7 @@ html,body {
     display: block;
     font-weight:800;
     width: 200px;
-    height: 10px;
+    height: 25px;
 	margin-left:0px;
 	margin-top:5px;
 }
@@ -841,7 +841,7 @@ html,body {
 	display: block;
 }
 .smalltitle21 {
-	font-size: 10px;
+	font-size: 13px;
 	line-height: 16px;
 	padding-left: 8px;
 	text-align: left;

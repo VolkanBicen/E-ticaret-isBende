@@ -556,62 +556,7 @@ if (isset($_FILES['dosya'])) {
 	}
 }
 
-if (isset($_POST['download'])) {
 
-	$file=$_POST['gorev_ek'];
-	$ad=$_POST['gorev_baslik'];
-
-	header("Content-length: ".filesize("../../foto".$file));  
-	header('Content-Type: application/octet-stream');  
-	header('Content-Disposition: attachment; filename="' ."İş Bende ". $file . '"');  
-	readfile("../../foto".$file); 
-}
-
-if (isset($_POST['sorucevap'])) {
-	$soru=$_POST['soru'];
-	$gonderenId=$_POST['gonderenId'];
-	$cevaplayanId=$_POST['cevaplayanId'];
-	$gorev_id=$_POST['gorev_id'];
-
-	$sayackelime=0;
-	$i=0;
-	
-	$dizi=explode(" ",$soru);
-	$uzunluk=strlen($soru);
- $fh = fopen("yasakkelimeler.txt","r"); //aciyoruz ve okuma yaptırıyoruz 
-
- while($ddd = fgets($fh,900)) { 
- 	for ($j=0; $j < $uzunluk ; $j++) { 
-
- 		if (trim($ddd)==trim($dizi[$j])) {
- 			$sayackelime=$sayackelime+1;
-
- 		}
- 	}
- }
-
- if ($sayackelime==0) {
-
- 	$ekle=$db -> prepare("INSERT INTO mesaj (gonderenId,cevaplayanId,gorev_id,mesaj) 
- 		VALUES ( '$gonderenId' ,'$cevaplayanId','$gorev_id','$soru')");
- 	$mesajekle=$ekle -> execute(array(
- 	));
- 	if($mesajekle){
- 		Header("Location:../../teklif.php?id=$gorev_id");
- 		
- 		exit();
- 	}else{
- 		Header("Location:../../gorevler.php");
- 		exit();
- 	}
- }
- else{
- 	Header("Location:../../gorevler.php?durum=no");
- 	exit();
- 	break;
- }
-
-}
 
 switch ($_POST['profilgüncelle']) {
 
@@ -865,6 +810,146 @@ switch ($_POST['profilgüncelle']) {
 
 }
 
+if (isset($_POST['download'])) {
+
+	$file=$_POST['gorev_ek'];
+	$ad=$_POST['gorev_baslik'];
+
+	header("Content-length: ".filesize("../../foto".$file));  
+	header('Content-Type: application/octet-stream');  
+	header('Content-Disposition: attachment; filename="' ."İş Bende ". $file . '"');  
+	readfile("../../foto".$file); 
+}
+
+if (isset($_POST['sorucevap'])) {
+	$soru=$_POST['soru'];
+	$gonderenId=$_POST['gonderenId'];
+	$cevaplayanId=$_POST['cevaplayanId'];
+	$gorev_id=$_POST['gorev_id'];
+
+	$sayackelime=0;
+	$i=0;
+	
+	$dizi=explode(" ",$soru);
+	$uzunluk=strlen($soru);
+ $fh = fopen("yasakkelimeler.txt","r"); //aciyoruz ve okuma yaptırıyoruz 
+
+ while($ddd = fgets($fh,900)) { 
+ 	for ($j=0; $j < $uzunluk ; $j++) { 
+
+ 		if (trim($ddd)==trim($dizi[$j])) {
+ 			$sayackelime=$sayackelime+1;
+
+ 		}
+ 	}
+ }
+
+ if ($sayackelime==0) {
+
+ 	$ekle=$db -> prepare("INSERT INTO mesaj (gonderenId,cevaplayanId,gorev_id,mesaj) 
+ 		VALUES ( '$gonderenId' ,'$cevaplayanId','$gorev_id','$soru')");
+ 	$mesajekle=$ekle -> execute(array(
+ 	));
+ 	if($mesajekle){
+ 		Header("Location:../../teklif.php?id=$gorev_id");
+ 		
+ 		exit();
+ 	}else{
+ 		Header("Location:../../gorevler.php");
+ 		exit();
+ 	}
+ }
+ else{
+ 	Header("Location:../../gorevler.php?durum=no");
+ 	exit();
+ 	break;
+ }
+
+}
+
+if (isset($_POST['teklifver'])) {
+
+	$veren_id=$_POST['veren_id'];
+	$gorev_id=$_POST['gorev_id'];
+	$gorev_teklif=$_POST['gorev_teklif'];
+
+
+	$ekle=$db -> prepare("INSERT INTO teklif (gorev_id,veren_id,teklif_miktar) 
+		VALUES ( '$gorev_id' ,'$veren_id','$gorev_teklif')");
+	$teklifver=$ekle -> execute(array(
+	));
+
+	
+	if($teklifver){
+		Header("Location:../../teklif.php?id=$gorev_id");
+
+		exit();
+	}else{
+		Header("Location:../../gorevler.php");
+		exit();
+	}
+}
+
+
+if (isset($_POST['yolla'])) {
+if(!empty($_POST['sec']))
+{
+	$mesajId=implode(',', $_POST['sec']);
+	$cevap=$_POST['soru_cevap'];
+$gorev_id=$_POST['gorev_id'];
+
+	$guncelle=$db->prepare("UPDATE mesaj SET 
+		cevap=:cevap
+
+
+		WHERE mesajId=$mesajId");
+	$update=$guncelle->execute(array(
+		'cevap' => $cevap,
+
+	));
+	if($update){
+		Header("Location:../../teklif.php?id=$gorev_id");
+		exit();
+	}else{
+		Header("Location:../../gorevler.php");
+		exit();
+	}
+}
+else{ 
+		Header("Location:../../gorevler.php");
+
+	 }
+}
+
+if (isset($_POST['teklifkabul'])) {
+if(!empty($_POST['kabul']))
+{
+$gorev_id=implode(',', $_POST['kabul']);
+$yapan_id=$_POST['yapan_id'];
+
+	$guncelle=$db->prepare("UPDATE gorev SET 
+		yapan_id=:yapan_id
+
+
+		WHERE gorev_id=$gorev_id");
+	$update=$guncelle->execute(array(
+		'yapan_id' => $yapan_id,
+
+	));
+	if($update){
+		Header("Location:../../ss.php?id=$gorev_id");
+		exit();
+	}else{
+		Header("Location:../../gorevler.php");
+		exit();
+	}
+
+}
+else{ 
+		Header("Location:../../gorevler.php");
+
+	 }
+}
 
 
 ?>
