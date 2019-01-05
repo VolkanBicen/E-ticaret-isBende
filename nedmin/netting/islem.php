@@ -892,64 +892,175 @@ if (isset($_POST['teklifver'])) {
 
 
 if (isset($_POST['yolla'])) {
-if(!empty($_POST['sec']))
-{
-	$mesajId=implode(',', $_POST['sec']);
-	$cevap=$_POST['soru_cevap'];
-$gorev_id=$_POST['gorev_id'];
+	if(!empty($_POST['sec']))
+	{
+		$mesajId=implode(',', $_POST['sec']);
+		$cevap=$_POST['soru_cevap'];
+		$gorev_id=$_POST['gorev_id'];
 
-	$guncelle=$db->prepare("UPDATE mesaj SET 
-		cevap=:cevap
+		$guncelle=$db->prepare("UPDATE mesaj SET 
+			cevap=:cevap
 
 
-		WHERE mesajId=$mesajId");
-	$update=$guncelle->execute(array(
-		'cevap' => $cevap,
+			WHERE mesajId=$mesajId");
+		$update=$guncelle->execute(array(
+			'cevap' => $cevap,
 
-	));
-	if($update){
-		Header("Location:../../teklif.php?id=$gorev_id");
-		exit();
-	}else{
-		Header("Location:../../gorevler.php");
-		exit();
+		));
+		if($update){
+			Header("Location:../../teklif.php?id=$gorev_id");
+			exit();
+		}else{
+			Header("Location:../../gorevler.php");
+			exit();
+		}
 	}
-}
-else{ 
+	else{ 
 		Header("Location:../../gorevler.php");
 
-	 }
+	}
 }
 
 if (isset($_POST['teklifkabul'])) {
-if(!empty($_POST['kabul']))
-{
-$gorev_id=implode(',', $_POST['kabul']);
-$yapan_id=$_POST['yapan_id'];
+	if(!empty($_POST['kabul']))
+	{
+		$gorev_id=implode(',', $_POST['kabul']);
+		$yapan_id=$_POST['yapan_id'];
 
-	$guncelle=$db->prepare("UPDATE gorev SET 
-		yapan_id=:yapan_id
+		$guncelle=$db->prepare("UPDATE gorev SET 
+			yapan_id=:yapan_id
 
 
-		WHERE gorev_id=$gorev_id");
-	$update=$guncelle->execute(array(
-		'yapan_id' => $yapan_id,
+			WHERE gorev_id=$gorev_id");
+		$update=$guncelle->execute(array(
+			'yapan_id' => $yapan_id,
+
+		));
+		if($update){
+			Header("Location:../../gorevTeslim.php?id=$gorev_id");
+			exit();
+		}else{
+			Header("Location:../../gorevler.php");
+			exit();
+		}
+
+	}
+	else{ 
+		Header("Location:../../gorevler.php");
+
+	}
+}
+
+if (isset($_POST['puanver'])) {
+
+	$puancek=$db -> prepare("SELECT puan from kullanici where kullanici_id=:id ");
+	$puancek -> execute(array(
+		'id' => $_POST['kullanici_id']
+	));
+	$puanceksor=$puancek->fetch(PDO::FETCH_ASSOC);
+	
+	
+
+	
+	$ayarkaydet=$db->prepare("UPDATE kullanici SET 
+
+		puan=:puan
+		
+		
+		WHERE kullanici_id={$_POST['kullanici_id']}");
+	$update=$ayarkaydet->execute(array(
+		
+		'puan' => $_POST['puan']+$puanceksor['puan']
+		
+
 
 	));
+
 	if($update){
-		Header("Location:../../ss.php?id=$gorev_id");
+
+		$puandurumguncelle=$db->prepare("UPDATE gorev SET 
+
+
+			puandurumu=:puandurumu
+
+			WHERE gorev_id={$_POST['gorev_id']}");
+		$update=$puandurumguncelle->execute(array(
+
+
+			'puandurumu' => 1
+
+
+		));
+
+		Header("Location:../../gorevTeslim.php?durum=yes");
+
 		exit();
 	}else{
-		Header("Location:../../gorevler.php");
+		Header("Location:../../gorevTeslim.php?durum=no");
 		exit();
-	}
+	}	
 
 }
-else{ 
-		Header("Location:../../gorevler.php");
 
-	 }
+
+
+
+if (isset($_POST['teslimettim'])) {
+	
+	$ayarkaydet=$db->prepare("UPDATE gorev SET 
+
+		teslimedildi=:teslimedildi
+		
+		
+		WHERE gorev_id={$_POST['gorev_id']}");
+	$update=$ayarkaydet->execute(array(
+		
+		'teslimedildi' => 1
+		
+
+
+	));
+
+	if($update){
+
+		Header("Location:../../gorevTeslim.php?durum=yes");
+
+		exit();
+	}else{
+		Header("Location:../../gorevTeslim.php?durum=no");
+		exit();
+	}	
+
 }
+
+if (isset($_POST['teslimaldim'])) {
+	
+	$ayarkaydet=$db->prepare("UPDATE gorev SET 
+
+		teslimalindi=:teslimalindi
+		
+		
+		WHERE gorev_id={$_POST['gorev_id']}");
+	$update=$ayarkaydet->execute(array(
+		
+		'teslimalindi' => 1
+		
+
+
+	));
+
+	if($update){
+
+		Header("Location:../../gorevTeslim.php?durum=yes");
+
+		exit();
+	}else{
+		Header("Location:../../gorevTeslim.php?durum=no");
+		exit();
+	}	
+
+}
+
 
 
 ?>

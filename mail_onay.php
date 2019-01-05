@@ -24,7 +24,7 @@ $mail->setFrom("vbicen1@gmail.com");
 $mail->addAddress($gonderenmail);
 $mail->isHTML(true);
 $mail->Subject = "is bende onay ";
-$mail->Body = "Lütfen Aşağıdaki linke tıklayrak mail onay gerçekleştiriniz\r\n http://localhost:8080/eticaret/onay.php?k=$gonderenmail";
+$mail->Body = "Lütfen Aşağıdaki linke tıklayrak mail onay gerçekleştiriniz\r\n http://localhost/eticaret/onay.php?k=$gonderenmail";
 
 if($mail->Send()){
 

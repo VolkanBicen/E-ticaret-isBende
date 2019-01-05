@@ -7,6 +7,65 @@ html,body {
 	padding:0;
 	font-size:14px;
 }
+<head>
+	<style>
+* {
+  box-sizing: border-box;
+}
+
+.columnsmus {
+  float: left;
+  width: 33.3%;
+  padding: 8px;
+}
+
+.pricemus {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.pricemus:hovermus {
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+.pricemus .headermus {
+  background-color: #111;
+  color: white;
+  font-size: 25px;
+}
+
+.pricemus li {
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  text-align: center;
+}
+
+.pricemus .greymus {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.buttonmus {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 600px) {
+  .columnsmus {
+    width: 100%;
+  }
+}
+</style>
+</head>
 #wrapper{
 	padding:0;
 	margin:0;
