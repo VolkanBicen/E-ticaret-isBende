@@ -2,7 +2,7 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
@@ -65,9 +65,9 @@ if(isset($_POST['sifremiunuttum1'])){
 		$mail->SMTPSecure = 'ssl'; 
 		$mail->Port = 465; 
 		$mail->Host = "smtp.gmail.com";
-		$mail->Username = "vbicen1@gmail.com";
-		$mail->Password = "@@v0lkan-6606";
-		$mail->setFrom("vbicen1@gmail.com");
+		$mail->Username = "infoisbende@gmail.com";
+		$mail->Password = "volkan06";
+		$mail->setFrom("infoisbende@gmail.com");
 		$mail->addAddress($kullanici_mail);
 		$mail->isHTML(true);
 		$mail->Subject = "Sifre Yenileme Talebi";

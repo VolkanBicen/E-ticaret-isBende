@@ -17,9 +17,9 @@ $mail->SMTPAuth = true;
 $mail->SMTPSecure = 'ssl'; //ssl
 $mail->Port = 465; //25 , 465 , 587
 $mail->Host = "smtp.gmail.com";
-$mail->Username = "vbicen1@gmail.com";
-$mail->Password = "@@v0lkan-6606";
-$mail->setFrom("vbicen1@gmail.com");
+$mail->Username = "infoisbende@gmail.com";
+$mail->Password = "volkan06";
+$mail->setFrom("infoisbende@gmail.com");
 $mail->addAddress($gonderenmail);
 $mail->isHTML(true);
 $mail->Subject =  "From: ".$_POST["adsoyad"]."<".$_POST["email"].">\r\n";
